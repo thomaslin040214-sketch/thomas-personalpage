@@ -309,12 +309,35 @@
     .btn:active {
       transform: scale(0.98);
     }
+    /* --- Apple Staggered Fade-In Keyframe --- */
+    @keyframes appleFadeInUp {
+      0% {
+        opacity: 0;
+        transform: translate3d(0, 24px, 0);
+      }
+      100% {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    .fade-in-entry {
+      opacity: 0;
+      animation-name: appleFadeInUp;
+      animation-duration: 1.2s;
+      animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+      animation-fill-mode: forwards;
+    }
+
+    .delay-1 { animation-delay: 0.15s; }
+    .delay-2 { animation-delay: 0.35s; }
+    .delay-3 { animation-delay: 0.55s; }
+    .delay-4 { animation-delay: 0.75s; }
   </style>
 </head>
 <body>
 
-  <!-- Apple Frosted Navigation -->
-  <nav>
+<!-- Apple Frosted Navigation -->
+  <nav class="fade-in-entry delay-1">
     <a href="#" class="nav-logo">TL.</a>
     <div class="nav-links">
       <a href="#about">About</a>
@@ -338,12 +361,12 @@
         <div class="apple-ambient-glow"></div>
       </div>
       <!-- Foreground: Text -->
-      <div class="layer layer-fore">
-        <div class="hero-badge">
+<div class="layer layer-fore">
+        <div class="hero-badge fade-in-entry delay-1">
           <span class="dot"></span> The University of Sydney &bull; BA in Economics
         </div>
-        <h1 class="hero-title">Hello, I'm <span>Thomas Lin</span>.</h1>
-        <p class="hero-subtitle">Focusing on applied economics, macroeconomic policy design, and market regulation.</p>
+        <h1 class="hero-title fade-in-entry delay-2">Hello, I'm <span>Thomas Lin</span>.</h1>
+        <p class="hero-subtitle fade-in-entry delay-3">Focusing on applied economics, macroeconomic policy design, and market regulation.</p>
       </div>
     </section>
 
