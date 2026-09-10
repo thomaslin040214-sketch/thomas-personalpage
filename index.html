@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Thomas Lin | Portfolio</title>
+  <style>
+    /* --- Base Variables --- */
+    :root {
+      --bg-dark: #0b1120;
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --accent-secondary: #818cf8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+    }
+
+    /* --- Parallax Viewport Engine --- */
+    .parallax-wrapper {
+      height: 100vh;
+      overflow-x: hidden;
+      overflow-y: auto;
+      perspective: 300px;
+      scroll-behavior: smooth;
+    }
+
+    .parallax-group {
+      position: relative;
+      height: 100vh;
+      transform-style: preserve-3d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- Layers --- */
+    .layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .layer-deep-bg {
+      transform: translateZ(-300px) scale(2);
+      z-index: 1;
+    }
+
+    .layer-mid {
+      transform: translateZ(-150px) scale(1.5);
+      z-index: 2;
+    }
+
+    .layer-fore {
+      transform: translateZ(0);
+      z-index: 3;
+    }
+
+    /* --- Navigation --- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.5rem 3rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 100;
+      background: linear-gradient(to bottom, rgba(11, 17, 32, 0.9), transparent);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-logo {
+      font-weight: 700;
+      font-size: 1.25rem;
+      color: var(--text-main);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      transition: color 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* --- Ambient Background Glows --- */
+    .glow-orb {
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--accent) 0%, rgba(129, 140, 248, 0.15) 60%, transparent 100%);
+      filter: blur(50px);
+      opacity: 0.5;
+    }
+
+    /* --- Typography & Cards --- */
+    .hero-badge {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent);
+      border-radius: 9999px;
+      font-size: 0.85rem;
+      margin-bottom: 1.2rem;
+      letter-spacing: 0.04em;
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      margin-top: 1.2rem;
+      text-align: center;
+    }
+
+    .content-block {
+      max-width: 900px;
+      width: 90%;
+      background: rgba(30, 41, 59, 0.65);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 3rem;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 1.25rem;
+      color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .card {
+      background: rgba(11, 17, 32, 0.5);
+      padding: 1.5rem;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent);
+    }
+
+    .card-tag {
+      font-size: 0.75rem;
+      color: var(--accent-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.4rem;
+    }
+
+    .card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1.5rem;
+      padding: 0.8rem 1.8rem;
+      background: var(--accent);
+      color: var(--bg-dark);
+      font-weight: 600;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Nav -->
+  <nav>
+    <a href="#" class="nav-logo">TL.</a>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#work">Research & Projects</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="parallax-wrapper">
+
+    <!-- Group 1: Hero -->
+    <section class="parallax-group" id="home">
+      <div class="layer layer-deep-bg">
+        <div style="font-size: 20rem; font-weight: 900; opacity: 0.02; user-select: none;">USYD</div>
+      </div>
+      <div class="layer layer-mid">
+        <div class="glow-orb"></div>
+      </div>
+      <div class="layer layer-fore">
+        <div class="hero-badge">University of Sydney &bull; Year 3</div>
+        <h1 class="hero-title">Hi, I'm <span>Thomas Lin</span>.</h1>
+        <p class="hero-subtitle">Penultimate-year student focusing on analytical problem-solving and research.</p>
+      </div>
+    </section>
+
+    <!-- Group 2: About -->
+    <section class="parallax-group" id="about">
+      <div class="layer layer-deep-bg">
+        <div style="font-size: 14rem; font-weight: 900; opacity: 0.02; user-select: none;">ABOUT</div>
+      </div>
+      <div class="layer layer-fore">
+        <div class="content-block">
+          <h2 class="section-title">About Me</h2>
+          <p style="color: var(--text-muted); line-height: 1.7; font-size: 1.05rem;">
+            Currently in my third year at the University of Sydney. My academic focus centers on rigorous data evaluation, market structures, and quantitative frameworks. I enjoy turning complex data into clear strategic insights and actionable models.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group 3: Work / Projects -->
+    <section class="parallax-group" id="work">
+      <div class="layer layer-mid">
+        <div class="glow-orb" style="background: radial-gradient(circle, var(--accent-secondary) 0%, transparent 65%);"></div>
+      </div>
+      <div class="layer layer-fore">
+        <div class="content-block">
+          <h2 class="section-title">Academic & Project Focus</h2>
+          <div class="grid">
+            <div class="card">
+              <div class="card-tag">Analysis</div>
+              <h3>Market Dynamics & Policy</h3>
+              <p>Evaluating regulatory frameworks, competition behavior, and industry efficiency models.</p>
+            </div>
+            <div class="card">
+              <div class="card-tag">Quantitative</div>
+              <h3>Empirical Modeling</h3>
+              <p>Analyzing datasets to uncover behavioral trends, equilibrium states, and predictive insights.</p>
+            </div>
+            <div class="card">
+              <div class="card-tag">Strategy</div>
+              <h3>Strategic Decision-Making</h3>
+              <p>Applying game theory and optimization principles to real-world corporate scenarios.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Group 4: Contact -->
+    <section class="parallax-group" id="contact">
+      <div class="layer layer-fore">
+        <div class="content-block" style="text-align: center;">
+          <h2 class="section-title" style="margin-bottom: 0.5rem;">Get In Touch</h2>
+          <p style="color: var(--text-muted);">Open to graduate opportunities, internships, and research collaborations.</p>
+          <a href="mailto:contact@thomaslin.com" class="btn">Connect via Email</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
