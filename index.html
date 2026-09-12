@@ -332,6 +332,50 @@
     .delay-2 { animation-delay: 0.35s; }
     .delay-3 { animation-delay: 0.55s; }
     .delay-4 { animation-delay: 0.75s; }
+    /* --- Interactive Cursor Spotlight Canvas --- */
+    .spotlight-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2;
+      background: radial-gradient(
+        600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+        rgba(41, 151, 255, 0.08),
+        transparent 60%
+      );
+      transition: opacity 0.3s ease;
+    }
+
+    /* --- Interactive Card Spotlight Highlight --- */
+    .card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        400px circle at var(--card-mouse-x, -500px) var(--card-mouse-y, -500px),
+        rgba(255, 255, 255, 0.12),
+        transparent 60%
+      );
+      opacity: 0;
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
